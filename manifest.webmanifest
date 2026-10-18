@@ -1,0 +1,19 @@
+{
+  "name": "máfia jr3",
+  "short_name": "máfia jr3",
+  "description": "Central oficial da família máfia jr3",
+  "lang": "pt-BR",
+  "start_url": "./mafia_app.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080809",
+  "theme_color": "#100b0d",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
