@@ -46,3 +46,98 @@ function saveWeeklyGoal(){const v=Math.max(0,Number(document.getElementById('wee
 function initSettings(){const v=get('weeklyGoal',20000);const el=document.getElementById('goalLabel');if(el)el.textContent=(v/1000)+'K por semana';const m=get('leaderMsg',null);if(m){const n=document.querySelector('#home .notice');if(n)n.textContent=m;}}
 const _render=render; render=function(){_render();initSettings()};
 </script></body></html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#100b0d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-512.png">
+<title>máfia jr3</title>
+<style>
+:root{--red:#b31f2b;--gold:#d4b06a;--bg:#0a090b;--panel:#171316;--muted:#a9a0a1;--line:#372328}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#351016,#100b0d 45%,#080809);color:#f7f1ee;font-family:system-ui,sans-serif;min-height:100vh}
+header{text-align:center;padding:24px 15px;border-bottom:1px solid var(--line);background:#08070899}
+.crest{font-size:29px;color:var(--gold)}.brand{font:900 39px Georgia,serif;letter-spacing:5px;margin:5px;color:#eee}
+.motto{color:var(--gold);font-size:11px;letter-spacing:3px}.subtitle{color:var(--muted);font-size:13px;margin-top:8px}
+.wrap{max-width:760px;margin:auto;padding:16px}.hero,.panel{border:1px solid #493039;border-radius:13px;background:#171316;padding:16px;margin-bottom:14px}
+.hero{background:linear-gradient(120deg,#291015,#151013);padding:20px}.hero h1{font: bold 25px Georgia,serif}.hero p,.member small{color:#c9c0c1;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tile{background:#191417;border:1px solid #493039;border-radius:12px;padding:15px;text-align:left;color:white;min-height:100px}
+.tile strong,.tile span{display:block}.tile strong{margin-top:7px}.tile span{font-size:12px;color:var(--muted);margin-top:4px}
+.section{margin-top:20px}.section h2,h2{font: bold 19px Georgia,serif}
+.member{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #30252a}.member:last-child{border:0}
+.rank{font-size:21px;width:32px;text-align:center}.member b{display:block}.tag{margin-left:auto;color:var(--gold);font-size:11px}
+.btn{border:1px solid #6b3039;background:#301219;color:white;border-radius:9px;padding:10px 12px;font-weight:bold;margin:3px}
+.field{width:100%;background:#0c0b0c;color:white;border:1px solid #443039;border-radius:8px;padding:11px;margin:5px 0 10px;font:inherit}
+.label{display:block;font-size:12px;color:#c7b9bc}.hidden{display:none}
+.notice{border-left:3px solid var(--red);padding:10px 12px;background:#1c1115;color:#d9cdcf;font-size:13px}
+.foot{text-align:center;color:#857a7d;font-size:11px;letter-spacing:2px;padding:24px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="crest">♛</div><div class="brand">máfia jr3</div><div class="motto">LEALDADE • RESPEITO • HONRA</div><div class="subtitle">CENTRAL OFICIAL • MÁFIA JR3</div></header>
+<main class="wrap">
+<section id="home">
+<div class="hero"><div style="text-align:center"><img src="icon-512.png" alt="Logo MÁFIA JR3" style="width:min(180px,55vw);border-radius:16px"></div><p style="color:#d4b06a">♛ ╾━╤𝕸╤━╼</p><h1>Uma família. Uma só bandeira.</h1><p>Consulte a hierarquia, acompanhe metas e veja os comunicados da família.</p></div>
+<div class="grid">
+<button class="tile" onclick="show('hierarquia')">👑<strong>Hierarquia</strong><span>Cargos e responsáveis</span></button>
+<button class="tile" onclick="show('membros')">♟️<strong>Membros</strong><span>Lista da família</span></button>
+<button class="tile" onclick="show('metas')">📈<strong>Metas</strong><span>80K por semana</span></button>
+<button class="tile" onclick="show('avisos')">📢<strong>Comunicados</strong><span>Avisos oficiais</span></button>
+<button class="tile" onclick="show('regras')">📜<strong>Regras</strong><span>O código da MAFIA</span></button>
+<button class="tile" onclick="openAdmin()">🔐<strong>Comando</strong><span>Painel da liderança</span></button>
+</div>
+<div class="section"><h2>♛ PALAVRA DO CHEFE</h2><div class="panel"><div class="notice" id="leaderText">Respeite a hierarquia, cumpra sua parte e trate cada membro com lealdade. A força da família começa pela união.</div><p style="color:#d4b06a;text-align:right">— DON DRAVEN</p></div></div>
+</section>
+<section id="hierarquia" class="hidden"><button class="btn" onclick="show('home')">← Voltar</button><h2>👑 Hierarquia oficial</h2><div class="panel" id="ranks"></div></section>
+<section id="membros" class="hidden"><button class="btn" onclick="show('home')">← Voltar</button><h2>♟️ Membros da família</h2><div class="panel" id="people"></div></section>
+<section id="metas" class="hidden"><button class="btn" onclick="show('home')">← Voltar</button><h2>📈 Metas semanais</h2><div class="notice">Meta: <b>80K por membro, por semana.</b> As marcações desta versão ficam salvas apenas neste navegador.</div><div class="panel" id="goals"></div></section>
+<section id="avisos" class="hidden"><button class="btn" onclick="show('home')">← Voltar</button><h2>📢 Comunicados</h2><div class="panel"><b>Meta semanal</b><p>A meta oficial é de 80K por membro por semana.</p></div><div class="panel"><b>Símbolo oficial</b><p style="font-size:24px;color:#d4b06a">♛<br>╾━╤𝕸╤━╼</p></div></section>
+<section id="regras" class="hidden"><button class="btn" onclick="show('home')">← Voltar</button><h2>📜 Código da máfia jr3</h2><div class="panel"><p>01 — Respeito entre membros.</p><p>02 — Lealdade à família.</p><p>03 — Respeito à hierarquia.</p><p>04 — Cumprimento das metas.</p><p>05 — Não prejudicar a reputação do clã.</p><p>06 — Manter postura e responsabilidade.</p></div></section>
+<section id="admin" class="hidden"><button class="btn" onclick="show('home')">← Voltar</button><h2>🔐 Painel de Comando</h2><div class="notice">A senha nesta versão é apenas uma barreira local, não uma proteção segura de administrador.</div><div class="panel"><label class="label">Mensagem do Chefe</label><input id="msg" class="field" placeholder="Mensagem oficial"><button class="btn" onclick="saveMsg()">Salvar mensagem</button></div></section>
+<div class="foot">♛ ╾━╤𝕸╤━╼<br><br>LEALDADE • RESPEITO • HONRA</div>
+</main>
+<script>
+const ranks=[
+['♛','CHEFE','[CHF]','DON DRAVEN'],
+['♚','SUB-CHEFE','[SCHF]','?'],
+['♜','BRAÇO DIREITO','[BD]','?'],
+['♞','BRAÇO ESQUERDO','[BE]','?'],
+['⚜','CAPITÃO','[CAP]','SALAZAR / SALAZAR2.0'],
+['🕴️','LÍDER','[LDR]','DAVI GOMES / DAVIZX_'],
+['⚔️','VICE-LÍDER','[VLD]','SAGAZ / MAFIOSO'],
+['⬖','SOLDADO ELITE','[SE]','LUQ / LUC7'],
+['♠','GANGSTER','[GST]','?'],
+['❦','MAFIOSO','[MAF]','?'],
+['⚿','ASSOCIADO','[ASS]','?']];
+const members=[
+['DON DRAVEN','CHEFE [CHF]'],
+['SALAZAR / SALAZAR2.0','CAPITÃO [CAP]'],
+['DAVI GOMES / DAVIZX_','LÍDER [LDR]'],
+['SAGAZ / MAFIOSO','VICE-LÍDER [VLD]'],
+['LUQ / LUC7','SOLDADO ELITE [SE]'],
+['FROST','?']];
+function get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}
+function put(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function show(id){document.querySelectorAll('main>section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){
+document.getElementById('ranks').innerHTML=ranks.map(r=>`<div class="member"><div class="rank">${r[0]}</div><div><b>${r[1]} — ${r[2]}</b><small>${r[3]}</small></div></div>`).join('');
+document.getElementById('people').innerHTML=members.map(m=>`<div class="member"><div class="rank">♟</div><div><b>${m[0]}</b><small>${m[1]}</small></div></div>`).join('');
+const goals=get('mafiaGoals',members.map(m=>({name:m[0],done:false}))).filter(g=>!['SK','P1 LENDARIO','THEUS','THEUZIM','P1 LEANDRO'].includes(g.name.toUpperCase()));
+put('mafiaGoals',goals);
+document.getElementById('goals').innerHTML=goals.map((g,i)=>`<div class="member"><div><b>${g.done?'🕴️ ':''}${esc(g.name)}</b><small>${g.done?'Meta cumprida':'Meta pendente'}</small></div><button class="btn" style="margin-left:auto" onclick="toggle(${i})">${g.done?'Desmarcar':'Meta batida'}</button></div>`).join('');
+document.getElementById('leaderText').textContent=get('leaderMsg','Respeite a hierarquia, cumpra sua parte e trate cada membro com lealdade. A força da família começa pela união.');
+}
+function toggle(i){const a=get('mafiaGoals',members.map(m=>({name:m[0],done:false})));a[i].done=!a[i].done;put('mafiaGoals',a);render()}
+function openAdmin(){if(prompt('Código do comando:')==='DRAVEN'){show('admin');document.getElementById('msg').value=get('leaderMsg','')}else alert('Código incorreto.')}
+function saveMsg(){put('leaderMsg',document.getElementById('msg').value.trim());render();alert('Mensagem salva neste dispositivo.')}
+render();
+</script>
+</body>
+</html>
